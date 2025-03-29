@@ -7,7 +7,7 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Input.H>
 #include "init.hpp"
-#include "parse.hpp"
+#include "backend.hpp"
 #include "defs.h"
 
 using namespace std;
@@ -18,8 +18,10 @@ void Input_Callback(Fl_Widget* widget, void* data) {
 	cout << "enter\n";
 
 	// Parse command
-	char** words = parse_words(input->value());
-	cout << words[0] << endl;
+	int word_count;
+	char** words = parse_words(input->value(), &word_count);
+	//cout << words[0] << endl;
+	run_commands(words, word_count);
 	
 	// Close window
 	win->hide();
