@@ -27,9 +27,24 @@ int run_commands(char** argv, int words) {
 	if (s[0] == "x") {
 		//std::cout << s[1] << std::endl;
 		//system(s[1].c_str());
+
 		char command[100];
 		sprintf(command, "/usr/bin/%s", s[1].c_str());
-		execvp(command, NULL);
+
+		char* args[words - 2];
+		if (words > 2) {
+			for (int i=0; i < (words - 1); i++) {
+				args[i] = argv[i+1];
+			}
+			args[words - 1] = NULL;
+			
+			execvp(command, args);
+		}
+		else {
+
+			execvp(command, NULL);
+		}
+
 		return 0;
 	} else {
 		return 1;
