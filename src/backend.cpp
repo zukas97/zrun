@@ -11,6 +11,7 @@ char** parse_words(const char* str, int* len) {
 		i++;
 	}
 	*len = i;
+	//cout << words[0] << endl;
 	return words;
 }
 
@@ -48,7 +49,13 @@ int run_commands(char** argv, int words) {
 	} 
 	// edit file
 	else if (s[0] == "e") {
-		char* ed_args[2];
+		char* ed_args[3];
+		char* editor = getenv("EDITOR");
+		std::cout << editor << std::endl;
+		ed_args[0] = editor;
+		ed_args[1] = (char*)s[1].c_str();
+		ed_args[2] = NULL;
+		execvp(editor, ed_args);
 
 	}
 
@@ -56,5 +63,5 @@ int run_commands(char** argv, int words) {
 	else {
 		return 1;
 	}
-
+	return 0;
 }

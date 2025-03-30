@@ -20,7 +20,6 @@ void Input_Callback(Fl_Widget* widget, void* data) {
 	// Parse command
 	int word_count;
 	char** words = parse_words(input->value(), &word_count);
-	//cout << words[0] << endl;
 	if (run_commands(words, word_count) != 0) {
 		cout << "command not found" << endl;
 	} 
