@@ -3,12 +3,10 @@
 
 char** parse_words(const char* str, int* len) {
 	char* tok = strtok((char*)str, " ");
-	//char* rest = (char*)str;
 	char** words;
 	int i = 0;
 	while (tok != NULL) {
 		words[i] = tok;
-		//std::cout << tok << std::endl;
 		tok = strtok(NULL, " ");
 		i++;
 	}
@@ -16,37 +14,46 @@ char** parse_words(const char* str, int* len) {
 	return words;
 }
 
+void execute(char** argv, int words) {
+	//char command[100];
+	//sprintf(command, "/usr/bin/%s", argv[1]);
+
+	char* args[words];
+	if (words > 2) {
+		for (int i=0; i < (words - 1); i++) {
+			args[i] = argv[i+1];
+			//std::cout << args[i] << std::endl;
+		}
+		args[words] = NULL;
+		
+		execvp(argv[1], args);
+	}
+	else {
+		execvp(argv[1], NULL);
+	}
+
+}
+
 int run_commands(char** argv, int words) {
-	//std::cout << argv[1] << std::endl;	
 	std::string s[words];
 	for (int i=0; i < words; i++) {
 		s[i].assign(argv[i]);
 	}
-	//std::cout << s[0] << std::endl;
 
+	// execute
 	if (s[0] == "x") {
-		//std::cout << s[1] << std::endl;
-		//system(s[1].c_str());
-
-		char command[100];
-		sprintf(command, "/usr/bin/%s", s[1].c_str());
-
-		char* args[words - 2];
-		if (words > 2) {
-			for (int i=0; i < (words - 1); i++) {
-				args[i] = argv[i+1];
-			}
-			args[words - 1] = NULL;
-			
-			execvp(command, args);
-		}
-		else {
-
-			execvp(command, NULL);
-		}
+		execute(argv, words);
 
 		return 0;
-	} else {
+	} 
+	// edit file
+	else if (s[0] == "e") {
+		char* ed_args[2];
+
+	}
+
+	// cmd not found
+	else {
 		return 1;
 	}
 
