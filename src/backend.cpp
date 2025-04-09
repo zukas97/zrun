@@ -16,26 +16,20 @@ char** parse_words(const char* str, int* len) {
 }
 
 void execute(char** argv, int words) {
-	//char command[100];
-	//sprintf(command, "/usr/bin/%s", argv[1]);
-
 	char* args[words];
-	if (words > 2) {
-		for (int i=0; i < (words - 1); i++) {
-			args[i] = argv[i+1];
-			//std::cout << args[i] << std::endl;
-		}
-		args[words] = NULL;
-		
-		execvp(argv[1], args);
+	for (int i=0; i < (words - 1); i++) {
+		args[i] = argv[i+1];
+		std::cout << args[i] << std::endl;
 	}
-	else {
-		execvp(argv[1], NULL);
+	args[words] = NULL;
+	
+	if (execvp(argv[1], args) < 0) {
+		std::cout << "x: command not found:  " << argv[1] << std::endl;
 	}
 
 }
 
-int run_commands(char** argv, int words) {
+int run_commands(char** argv, int words, Config config) {
 	std::string s[words];
 	for (int i=0; i < words; i++) {
 		s[i].assign(argv[i]);
@@ -50,8 +44,14 @@ int run_commands(char** argv, int words) {
 	// edit file
 	else if (s[0] == "e") {
 		char* ed_args[3];
-		char* editor = getenv("EDITOR");
-		std::cout << editor << std::endl;
+		char* editor = config.editor;
+		std::cout << config.editor << std::endl;
+		//if (config.editor[0] =='\0') {
+		//	editor = getenv("EDITOR");
+		//}
+		if (editor == NULL) {
+			printf("EDITOR not set. Defaulting to vim");
+		}
 		ed_args[0] = editor;
 		ed_args[1] = (char*)s[1].c_str();
 		ed_args[2] = NULL;

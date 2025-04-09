@@ -1,4 +1,4 @@
-LIBS = -lfltk
+LIBS = -lfltk -linih
 CFLAGS = -ggdb -Wall
 
 build:
