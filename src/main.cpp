@@ -25,6 +25,7 @@ void Input_Callback(Fl_Widget* widget, void* data) {
 	} 
 	
 	// Close window
+	deinit(configuration);
 	win->hide();
 	delete win;
 }

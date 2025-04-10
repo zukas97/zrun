@@ -7,3 +7,4 @@
 
 int init(Fl_Window** win, Fl_Input** input);
 Config get_config();
+void deinit(Config config);

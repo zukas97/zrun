@@ -1,10 +1,11 @@
 #include "init.hpp"
 #include "defs.h"
+#include <cstdlib>
 #include <cstring>
 
 using namespace std;
 
-Config *config;
+Config config;
 
 int init(Fl_Window** win, Fl_Input** input) {
 	*win = new Fl_Window(WIDTH, HEIGHT);
@@ -19,13 +20,13 @@ static int handler(void* user, const char* section, const char* name, const char
 	if (strcmp(section, "Defaults") == 0){
 		if (strcmp(name, "terminal") == 0) {
 			cout << value << endl;
-			strncpy(config->terminal, value, strlen(value));
-			//config->terminal = (char*)value;
+			config.terminal = strdup(value);
+			
+			//strncpy(config.terminal, value, 100);
 		}
 		else if (strcmp(name, "editor") == 0) {
-			//config->editor = (char*)value;
-			strncpy(config->editor, value, sizeof(config->editor) - 1);
-			cout << config->editor << endl;
+			//strncpy(config->editor, value, sizeof(config->editor) - 1);
+			config.editor = strdup(value);
 		}
 	}
 	return 1;
@@ -40,5 +41,10 @@ Config get_config() {
 		cerr << "can't load config" << endl;
 	}
 	//*configuration = config;
-	return *config;
+	return config;
+}
+
+void deinit(Config config) {
+	free(config.terminal);
+	free(config.editor);
 }

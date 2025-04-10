@@ -4,8 +4,8 @@
 #include <string.h>
 
 struct Config {
-	char editor[64];
-	char terminal[64];
+	char* editor;
+	char* terminal;
 };
 
 char** parse_words(const char* str, int* len);
