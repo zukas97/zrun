@@ -36,7 +36,6 @@ int main(int argc, char** argv) {
 	init(&win, &input);
 	//get_config(&configuration);
 	configuration = get_config();
-	cout << configuration.editor << endl;
 	win->set_non_modal();
 	input->when(FL_WHEN_ENTER_KEY);
 	input->callback(Input_Callback, win);

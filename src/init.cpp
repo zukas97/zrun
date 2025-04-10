@@ -19,7 +19,6 @@ int init(Fl_Window** win, Fl_Input** input) {
 static int handler(void* user, const char* section, const char* name, const char* value) {
 	if (strcmp(section, "Defaults") == 0){
 		if (strcmp(name, "terminal") == 0) {
-			cout << value << endl;
 			config.terminal = strdup(value);
 			
 			//strncpy(config.terminal, value, 100);
