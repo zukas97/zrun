@@ -29,6 +29,16 @@ static int handler(void* user, const char* section, const char* name, const char
 			config.editor = strdup(value);
 		}
 	}
+	else if (strcmp(section, "Editor") == 0) {
+		if (strcmp(name, "terminal") == 0) {
+			if (strcmp(value, "true") == 0) {
+				config.editor_terminal = true;
+			}
+			else {
+				config.editor_terminal = false;
+			}
+		}
+	}
 	return 1;
 }
 

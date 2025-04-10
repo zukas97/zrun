@@ -6,6 +6,7 @@
 struct Config {
 	char* editor;
 	char* terminal;
+	bool editor_terminal;
 };
 
 char** parse_words(const char* str, int* len);
